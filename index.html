@@ -43,7 +43,7 @@
             
             document.getElementById('status').textContent = 'Opening Colab notebook...';
             
-            const params = `videoUrl=${videoUrl}&startTime=${startTime}&endTime=${endTime}`;
+            const params = `params=${encodeURIComponent(JSON.stringify({videoUrl, startTime, endTime}))}`;
             const fullUrl = `${COLAB_NOTEBOOK_URL}#${params}`;
             window.open(fullUrl, '_blank');
         });
