@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Cutter (Cloud Version)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+    <h1>YouTube Video Cutter (Cloud Version)</h1>
+    <form id="video-form">
+        <label for="video-url">YouTube URL:</label>
+        <input type="text" id="video-url" name="video-url" required>
+        <br>
+        <label for="start-time">Start Time (seconds):</label>
+        <input type="number" id="start-time" name="start-time" required>
+        <br>
+        <label for="end-time">End Time (seconds):</label>
+        <input type="number" id="end-time" name="end-time" required>
+        <br>
+        <button type="submit">Cut Video</button>
+    </form>
+    <div id="status"></div>
+
+    <script>
+        const COLAB_NOTEBOOK_URL = 'https://colab.research.google.com/drive/YOUR_NOTEBOOK_ID';
+
+        document.getElementById('video-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const videoUrl = document.getElementById('video-url').value;
+            const startTime = document.getElementById('start-time').value;
+            const endTime = document.getElementById('end-time').value;
+            
+            document.getElementById('status').textContent = 'Processing... Please check the Colab notebook.';
+            
+            window.open(`${COLAB_NOTEBOOK_URL}?videoUrl=${encodeURIComponent(videoUrl)}&startTime=${startTime}&endTime=${endTime}`, '_blank');
+        });
+    </script>
+</body>
+</html>
