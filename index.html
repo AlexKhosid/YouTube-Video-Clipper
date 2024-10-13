@@ -38,18 +38,14 @@
 
         document.getElementById('video-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const videoUrl = document.getElementById('video-url').value;
+            const videoUrl = encodeURIComponent(document.getElementById('video-url').value);
             const startTime = timeToSeconds(document.getElementById('start-time').value);
             const endTime = timeToSeconds(document.getElementById('end-time').value);
             
-            const params = {videoUrl, startTime, endTime};
-            const paramsString = JSON.stringify(params);
-            const encodedParams = encodeURIComponent(paramsString);
-            
             document.getElementById('status').textContent = 'Opening Colab notebook...';
-            document.getElementById('debug').textContent = `Debug: ${paramsString}`;
+            document.getElementById('debug').textContent = `Debug: videoUrl=${videoUrl}, startTime=${startTime}, endTime=${endTime}`;
             
-            const fullUrl = `${COLAB_NOTEBOOK_URL}#params=${encodedParams}`;
+            const fullUrl = `${COLAB_NOTEBOOK_URL}?videoUrl=${videoUrl}&startTime=${startTime}&endTime=${endTime}`;
             window.open(fullUrl, '_blank');
         });
     </script>
