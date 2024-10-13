@@ -15,12 +15,12 @@
                 <input type="text" id="video-url" name="video-url" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             </div>
             <div>
-                <label for="start-time" class="block text-sm font-medium text-gray-700">Start Time (seconds):</label>
-                <input type="number" id="start-time" name="start-time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <label for="start-time" class="block text-sm font-medium text-gray-700">Start Time (H:MM:SS):</label>
+                <input type="text" id="start-time" name="start-time" required pattern="^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$" placeholder="0:00:00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             </div>
             <div>
-                <label for="end-time" class="block text-sm font-medium text-gray-700">End Time (seconds):</label>
-                <input type="number" id="end-time" name="end-time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <label for="end-time" class="block text-sm font-medium text-gray-700">End Time (H:MM:SS):</label>
+                <input type="text" id="end-time" name="end-time" required pattern="^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$" placeholder="0:00:00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
             </div>
             <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cut Video</button>
         </form>
@@ -30,11 +30,16 @@
     <script>
         const COLAB_NOTEBOOK_URL = 'https://colab.research.google.com/drive/17-h1G_9Kr9bFHBEDOAYk5wkZgKMNLqu3';
 
+        function timeToSeconds(time) {
+            const [hours, minutes, seconds] = time.split(':').map(Number);
+            return hours * 3600 + minutes * 60 + seconds;
+        }
+
         document.getElementById('video-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const videoUrl = encodeURIComponent(document.getElementById('video-url').value);
-            const startTime = document.getElementById('start-time').value;
-            const endTime = document.getElementById('end-time').value;
+            const startTime = timeToSeconds(document.getElementById('start-time').value);
+            const endTime = timeToSeconds(document.getElementById('end-time').value);
             
             document.getElementById('status').textContent = 'Opening Colab notebook...';
             
