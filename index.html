@@ -5,22 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Video Cutter (Cloud Version)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>YouTube Video Cutter (Cloud Version)</h1>
-    <form id="video-form">
-        <label for="video-url">YouTube URL:</label>
-        <input type="text" id="video-url" name="video-url" required>
-        <br>
-        <label for="start-time">Start Time (seconds):</label>
-        <input type="number" id="start-time" name="start-time" required>
-        <br>
-        <label for="end-time">End Time (seconds):</label>
-        <input type="number" id="end-time" name="end-time" required>
-        <br>
-        <button type="submit">Cut Video</button>
-    </form>
-    <div id="status"></div>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">YouTube Video Cutter</h1>
+        <form id="video-form" class="space-y-4">
+            <div>
+                <label for="video-url" class="block text-sm font-medium text-gray-700">YouTube URL:</label>
+                <input type="text" id="video-url" name="video-url" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div>
+                <label for="start-time" class="block text-sm font-medium text-gray-700">Start Time (seconds):</label>
+                <input type="number" id="start-time" name="start-time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <div>
+                <label for="end-time" class="block text-sm font-medium text-gray-700">End Time (seconds):</label>
+                <input type="number" id="end-time" name="end-time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            </div>
+            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cut Video</button>
+        </form>
+        <div id="status" class="mt-4 text-sm text-gray-600"></div>
+    </div>
 
     <script>
         const COLAB_NOTEBOOK_URL = 'https://colab.research.google.com/drive/17-h1G_9Kr9bFHBEDOAYk5wkZgKMNLqu3?usp=sharing';
@@ -33,7 +39,8 @@
             
             document.getElementById('status').textContent = 'Processing... Please check the Colab notebook.';
             
-            window.open(`${COLAB_NOTEBOOK_URL}?videoUrl=${encodeURIComponent(videoUrl)}&startTime=${startTime}&endTime=${endTime}`, '_blank');
+            const params = new URLSearchParams({videoUrl, startTime, endTime}).toString();
+            window.open(`${COLAB_NOTEBOOK_URL}#${params}`, '_blank');
         });
     </script>
 </body>
