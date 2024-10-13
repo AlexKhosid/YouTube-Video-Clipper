@@ -25,6 +25,7 @@
             <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cut Video</button>
         </form>
         <div id="status" class="mt-4 text-sm text-gray-600"></div>
+        <div id="debug" class="mt-4 text-xs text-gray-500"></div>
     </div>
 
     <script>
@@ -37,14 +38,18 @@
 
         document.getElementById('video-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const videoUrl = encodeURIComponent(document.getElementById('video-url').value);
+            const videoUrl = document.getElementById('video-url').value;
             const startTime = timeToSeconds(document.getElementById('start-time').value);
             const endTime = timeToSeconds(document.getElementById('end-time').value);
             
-            document.getElementById('status').textContent = 'Opening Colab notebook...';
+            const params = {videoUrl, startTime, endTime};
+            const paramsString = JSON.stringify(params);
+            const encodedParams = encodeURIComponent(paramsString);
             
-            const params = `params=${encodeURIComponent(JSON.stringify({videoUrl, startTime, endTime}))}`;
-            const fullUrl = `${COLAB_NOTEBOOK_URL}#${params}`;
+            document.getElementById('status').textContent = 'Opening Colab notebook...';
+            document.getElementById('debug').textContent = `Debug: ${paramsString}`;
+            
+            const fullUrl = `${COLAB_NOTEBOOK_URL}#params=${encodedParams}`;
             window.open(fullUrl, '_blank');
         });
     </script>
