@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Video Cutter (Cloud Version)</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -29,18 +28,19 @@
     </div>
 
     <script>
-        const COLAB_NOTEBOOK_URL = 'https://colab.research.google.com/drive/17-h1G_9Kr9bFHBEDOAYk5wkZgKMNLqu3?usp=sharing';
+        const COLAB_NOTEBOOK_URL = 'https://colab.research.google.com/drive/17-h1G_9Kr9bFHBEDOAYk5wkZgKMNLqu3';
 
-        document.getElementById('video-form').addEventListener('submit', async (e) => {
+        document.getElementById('video-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const videoUrl = document.getElementById('video-url').value;
+            const videoUrl = encodeURIComponent(document.getElementById('video-url').value);
             const startTime = document.getElementById('start-time').value;
             const endTime = document.getElementById('end-time').value;
             
-            document.getElementById('status').textContent = 'Processing... Please check the Colab notebook.';
+            document.getElementById('status').textContent = 'Opening Colab notebook...';
             
-            const params = new URLSearchParams({videoUrl, startTime, endTime}).toString();
-            window.open(`${COLAB_NOTEBOOK_URL}#${params}`, '_blank');
+            const params = `videoUrl=${videoUrl}&startTime=${startTime}&endTime=${endTime}`;
+            const fullUrl = `${COLAB_NOTEBOOK_URL}#${params}`;
+            window.open(fullUrl, '_blank');
         });
     </script>
 </body>
